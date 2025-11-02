@@ -1,5 +1,6 @@
 const express = require("express");
-const {Auth} = require("./middlewares/auth");
+const connectDB = require("./config/database");
+const { Auth } = require("./middlewares/auth");
 
 const app = express();
 
@@ -7,6 +8,13 @@ app.use("/user", Auth, (req, res) => {
   res.send();
 });
 
-app.listen(3000, () => {
-  console.log("server running at port 3000");
-});
+connectDB()
+  .then(() => {
+    console.log("Database Connected");
+    app.listen(3000, () => {
+      console.log("server running at port 3000");
+    });
+  })
+  .catch((err) => {
+    console.log("database not connected");
+  });
