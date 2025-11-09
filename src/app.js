@@ -5,15 +5,23 @@ const { User } = require("./models/user");
 
 const app = express();
 
+app.use(express.json());
+
 app.post("/signup", Auth, async (req, res) => {
   const user = new User({
-    firstName: "Aman",
-    lastName: "Jain",
-    email: "asd@gmail.com",
+    firstName: "Asd1",
+    lastName: "Qwe1",
+    email: "aj111@gmail.com",
     password: "Asdqwe1234",
+    about:"Hello"
   });
   await user.save();
-  res.send("User data sent successfully")
+  res.send("User data sent successfully");
+});
+app.get("/feed", async (req, res) => {
+  const feed = await User.find();
+  console.log(feed);
+  res.send(feed);
 });
 
 connectDB()
